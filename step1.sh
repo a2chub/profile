@@ -75,7 +75,7 @@ install_git() {
 setup_configs() {
     install_git
     install_vim_jetpack
-    git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
+    git clone https://github.com/a2chub/profiles.git ~/dotfiles
     ln -s ~/dotfiles/.vimrc ~/.vimrc
     ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
     # 他の設定ファイルも同様にリンクを作成
@@ -86,9 +86,12 @@ install_apps
 setup_configs
 
 # SSH設定はオプション
-read -p "SSH設定を行いますか？ (y/n): " setup_ssh_choice
-if [ "$setup_ssh_choice" == "y" ]; then
-    ./step2.sh
-fi
+#read -p "SSH設定を行いますか？ (y/n): " setup_ssh_choice
+#if [ "$setup_ssh_choice" == "y" ]; then
+#    ./step2.sh
+#fi
 
 echo "セットアップが完了しました。"
+
+
+
