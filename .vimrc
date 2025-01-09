@@ -59,16 +59,16 @@ if exists('&ambiwidth')
 endif
 
 " Jetpack Plugin インストール
+packadd vim-jetpack
 call jetpack#begin()
+Jetpack 'tani/vim-jetpack'
 Jetpack 'preservim/nerdtree'
 Jetpack 'preservim/nerdcommenter'
 Jetpack 'vim-airline/vim-airline'
 Jetpack 'vim-airline/vim-airline-themes'
 Jetpack 'vim-jp/vimdoc-ja'
-Jetpack 'famiu/minibufexpl.vim'
 Jetpack 'mattn/gist-vim'
 call jetpack#end()
-
 
 " ショートカット
 " Ev/Rvでvimrcの編集と反映

@@ -51,10 +51,22 @@ install_apps() {
 install_vim_jetpack() {
     if [ ! -d "~/.vim/pack/jetpack/opt/vim-jetpack" ]; then
         echo "vim-jetpackをインストールします。"
-        git clone https://github.com/tani/vim-jetpack.git ~/.vim/pack/jetpack/opt/vim-jetpack
+        curl -fLo ~/.vim/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim
     else
         echo "vim-jetpackは既にインストールされています。"
     fi
+    if [ ! -d "~/.fonts" ]; then
+        echo "fontsをインストールします。"
+        cd ~/setup/.fonts
+        git clone https://github.com/powerline/fonts.git --depth=1
+        cd ~/setup/.fonts/fonts
+        ./install.sh
+        cd ..
+        rm -rf ~/setup/.fonts/fonts
+    else
+        echo "fontsは既にインストールされています。"
+    fi
+
 }
 
 # gitのインストール
@@ -75,9 +87,10 @@ install_git() {
 setup_configs() {
     install_git
     install_vim_jetpack
-    git clone https://github.com/a2chub/profiles.git ~/dotfiles
+    echo "git clone https://github.com/a2chub/profile.git ~/dotfiles"
+    git clone https://github.com/a2chub/profile.git ~/dotfiles
     ln -s ~/dotfiles/.vimrc ~/.vimrc
-    ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+    #ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
     # 他の設定ファイルも同様にリンクを作成
 }
 
