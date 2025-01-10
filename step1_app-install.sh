@@ -101,7 +101,7 @@ setup_configs
 # SSH設定はオプション
 #read -p "SSH設定を行いますか？ (y/n): " setup_ssh_choice
 #if [ "$setup_ssh_choice" == "y" ]; then
-#    ./step2.sh
+#    ./step2_make-ssh-key.sh
 #fi
 
 echo "セットアップが完了しました。"
