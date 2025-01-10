@@ -57,12 +57,12 @@ install_vim_jetpack() {
     fi
     if [ ! -d "~/.fonts" ]; then
         echo "fontsをインストールします。"
-        cd ~/setup/.fonts
+        cd ~/.fonts
         git clone https://github.com/powerline/fonts.git --depth=1
-        cd ~/setup/.fonts/fonts
+        cd ~/.fonts/fonts
         ./install.sh
         cd ..
-        rm -rf ~/setup/.fonts/fonts
+        rm -rf ~/.fonts/fonts
     else
         echo "fontsは既にインストールされています。"
     fi
