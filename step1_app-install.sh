@@ -29,6 +29,7 @@ install_apps() {
         if ! command -v mise &> /dev/null; then
             echo "miseが見つかりません。インストールを行います。"
             curl https://mise.run | sh
+            echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
         else
             echo "miseは既にインストールされています。アップデートを行います。"
             mise self-update
