@@ -108,4 +108,4 @@ setup_configs
 echo "セットアップが完了しました。"
 
 
-
+source ~/.bashrc
