@@ -89,9 +89,9 @@ setup_configs() {
     install_git
     install_vim_jetpack
     echo "git clone https://github.com/a2chub/profile.git ~/dotfiles"
-    git clone https://github.com/a2chub/profile.git ~/dotfiles
-    ln -s ~/dotfiles/.vimrc ~/.vimrc
-    #ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+    git clone https://github.com/a2chub/profile.git ~/profile
+    ln -s ~/profile/.vimrc ~/.vimrc
+    #ln -s ~/profile/.tmux.conf ~/.tmux.conf
     # 他の設定ファイルも同様にリンクを作成
 }
 
