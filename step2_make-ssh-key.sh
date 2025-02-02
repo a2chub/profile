@@ -5,7 +5,7 @@ setup_ssh() {
     read -p "メールアドレスを入力してください: " email
     username=$(whoami)
     hostname=$(hostname)
-    ssh-keygen -t rsa -b 4096 -C "$email" -f ~/.ssh/${username}_${hostname} -N ""
+    ssh-keygen -t ed25519 -C "$email" -f ~/.ssh/${username}_${hostname} -N ""
 
     ls -la ~/.ssh
 
