@@ -10,8 +10,8 @@ setup_ssh() {
     ls -la ~/.ssh
 
     #ssh-copy-id -i "~/.ssh/${username}_${hostname}.pub" user@your-ssh-server
-    echo "Host your-ssh-server" >> ~/.ssh/config
-    echo "  User yourusername" >> ~/.ssh/config
+    echo "Host github.com" >> ~/.ssh/config
+    echo "  User git" >> ~/.ssh/config
     echo "  IdentityFile ~/.ssh/${username}_${hostname}" >> ~/.ssh/config
 }
 
