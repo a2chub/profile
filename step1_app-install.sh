@@ -24,7 +24,8 @@ check_and_install_brew() {
 install_apps() {
     if [ "$OS" == "Linux" ]; then
         sudo apt update
-        sudo apt install -y vim tmux
+        sudo apt install -y curl neovim tmux
+        mkdir ~/.vimrc_backup
         # miseのインストールまたはアップデート
         if ! command -v mise &> /dev/null; then
             echo "miseが見つかりません。インストールを行います。"
@@ -36,7 +37,7 @@ install_apps() {
         fi
     elif [ "$OS" == "MacOS" ]; then
         check_and_install_brew
-        brew install vim tmux
+        brew install neovim tmux
         # miseのインストールまたはアップデート
         if ! command -v mise &> /dev/null; then
             echo "miseが見つかりません。インストールを行います。"
@@ -76,6 +77,8 @@ install_git() {
         echo "gitが見つかりません。インストールを行います。"
         if [ "$OS" == "Linux" ]; then
             sudo apt install -y git
+            git config --global user.name "a2c"
+            git config --global user.email "a2cgle@gmail.com"
         elif [ "$OS" == "MacOS" ]; then
             brew install git
         fi
@@ -109,3 +112,7 @@ echo "セットアップが完了しました。"
 
 
 source ~/.bashrc
+
+
+# ubuntuで＄HOMEのフォルダを英語表記にする
+# LANG=C xdg-user-dirs-update --force
