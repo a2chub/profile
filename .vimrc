@@ -68,6 +68,7 @@ Jetpack 'vim-airline/vim-airline'
 Jetpack 'vim-airline/vim-airline-themes'
 Jetpack 'vim-jp/vimdoc-ja'
 Jetpack 'mattn/gist-vim'
+Jetpack 'Shougo/qbuf.vim'
 call jetpack#end()
 
 " ショートカット
@@ -193,7 +194,6 @@ let g:qb_hotkey = ":;"
 let g:changelog_username = "a2c <atusi@a2c.biz>"
 let g:changelog_timeformat = "# %Y-%m-%d (%a)"
 nnoremap <Leader><Leader><Leader> :new ~atusi/Dropbox/changelog<cr>
-
 
 "set runtimepath+=$HOME/.vim/plugin/hatena
 let g:hatena_user='a2c'
