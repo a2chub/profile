@@ -90,7 +90,6 @@ setup_configs() {
     echo "git clone https://github.com/a2chub/profile.git ~/dotfiles"
     git clone https://github.com/a2chub/profile.git ~/dotfiles
     ln -s ~/dotfiles/.vimrc ~/.vimrc
-    ln -s ~/profile/config/nvim ~/.config/nvim
     #ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
     # 他の設定ファイルも同様にリンクを作成
 }
