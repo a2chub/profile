@@ -49,22 +49,21 @@ install_apps() {
 
 # vim-jetpackのインストール
 install_vim_jetpack() {
-    if [ ! -d "~/.vim/pack/jetpack/opt/vim-jetpack" ]; then
+    if [ ! -d "$HOME/.vim/pack/jetpack/opt/vim-jetpack" ]; then
         echo "vim-jetpackをインストールします。"
         curl -fLo ~/.vim/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim --create-dirs https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim
     else
         echo "vim-jetpackは既にインストールされています。"
     fi
-    if [ ! -d "~/.fonts" ]; then
-        echo "fontsをインストールします。"
-        cd ~/setup/.fonts
-        git clone https://github.com/powerline/fonts.git --depth=1
-        cd ~/setup/.fonts/fonts
-        ./install.sh
-        cd ..
-        rm -rf ~/setup/.fonts/fonts
+    # Powerline fontsのインストール
+    if [ ! -d "$HOME/.local/share/fonts" ] || [ -z "$(ls -A $HOME/.local/share/fonts 2>/dev/null | grep -i powerline)" ]; then
+        echo "Powerline fontsをインストールします。"
+        TEMP_FONTS=$(mktemp -d)
+        git clone https://github.com/powerline/fonts.git --depth=1 "$TEMP_FONTS"
+        "$TEMP_FONTS/install.sh"
+        rm -rf "$TEMP_FONTS"
     else
-        echo "fontsは既にインストールされています。"
+        echo "Powerline fontsは既にインストールされています。"
     fi
 
 }
