@@ -67,4 +67,13 @@ create_link "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
 # Starship prompt
 create_link "$DOTFILES_DIR/config/starship.toml" "$HOME/.config/starship.toml"
 
+# AeroSpace window manager
+create_link "$DOTFILES_DIR/config/aerospace/aerospace.toml" "$HOME/.config/aerospace/aerospace.toml"
+
+# Borders (window border styling)
+create_link "$DOTFILES_DIR/config/borders" "$HOME/.config/borders"
+
+# Sketchybar
+create_link "$DOTFILES_DIR/config/sketchybar" "$HOME/.config/sketchybar"
+
 print_success "All symlinks created"

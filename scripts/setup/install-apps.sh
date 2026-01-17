@@ -1,5 +1,16 @@
 #!/bin/bash
 
+set -euo pipefail
+
+# エラートラップ
+error_handler() {
+    local line_no=$1
+    local error_code=$2
+    echo "エラー: 行 $line_no でコマンドが失敗しました (終了コード: $error_code)" >&2
+    exit "$error_code"
+}
+trap 'error_handler ${LINENO} $?' ERR
+
 # OSの判別
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     OS="Linux"
@@ -86,11 +97,19 @@ install_git() {
 setup_configs() {
     install_git
     install_vim_jetpack
-    echo "git clone https://github.com/a2chub/profile.git ~/dotfiles"
-    git clone https://github.com/a2chub/profile.git ~/dotfiles
-    ln -s ~/dotfiles/.vimrc ~/.vimrc
-    #ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
-    # 他の設定ファイルも同様にリンクを作成
+
+    # dotfilesが既に存在する場合はスキップ
+    if [ -d ~/dotfiles ]; then
+        echo "dotfilesは既に存在します。シンボリックリンクの作成には ./setup.sh --links-only を使用してください。"
+    else
+        echo "git clone https://github.com/a2chub/profile.git ~/dotfiles"
+        git clone https://github.com/a2chub/profile.git ~/dotfiles
+    fi
+
+    # シンボリックリンクの作成（setup.shを使用することを推奨）
+    if [ -f ~/dotfiles/setup.sh ]; then
+        echo "シンボリックリンクの作成には ~/dotfiles/setup.sh --links-only を実行してください。"
+    fi
 }
 
 # メイン処理

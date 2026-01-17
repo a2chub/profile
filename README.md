@@ -18,10 +18,16 @@ cd ~/dotfiles
 | `--skip-links` | シンボリックリンク作成をスキップ |
 | `--skip-tools` | ツールインストールをスキップ |
 | `--links-only` | シンボリックリンクのみ作成 |
+| `--setup-ssh` | GitHub用SSH鍵を設定 |
+| `--setup-docker` | Dockerをインストール |
+| `--install-apps` | レガシーアプリインストールスクリプトを実行 |
 
 ```bash
 # 例: シンボリックリンクのみ作成
 ./setup.sh --links-only
+
+# 例: SSH設定も実行
+./setup.sh --setup-ssh
 ```
 
 ## 対応OS
@@ -56,17 +62,30 @@ cd ~/dotfiles
 
 ```
 dotfiles/
-├── setup.sh                 # メインセットアップスクリプト
+├── setup.sh                     # メインセットアップスクリプト（唯一のエントリーポイント）
 ├── scripts/
-│   ├── install-packages.sh  # パッケージインストール
-│   ├── link-dotfiles.sh     # シンボリックリンク作成
-│   └── install-tools.sh     # 追加ツールインストール
+│   ├── install-packages.sh      # パッケージインストール
+│   ├── link-dotfiles.sh         # シンボリックリンク作成
+│   ├── install-tools.sh         # 追加ツールインストール
+│   └── setup/                   # オプションセットアップスクリプト
+│       ├── install-apps.sh      # アプリインストール（旧step1）
+│       ├── setup-ssh.sh         # SSH鍵設定（旧step2）
+│       └── install-docker.sh    # Dockerインストール
+├── packages/
+│   └── Brewfile                 # Homebrew パッケージ定義
 ├── config/
-│   ├── nvim/init.lua        # Neovim設定
-│   └── starship.toml        # Starship設定
-├── .zshrc                   # Zsh設定
-├── .tmux.conf               # tmux設定
-└── .vimrc                   # Vim設定
+│   ├── nvim/                    # Neovim設定
+│   ├── starship.toml            # Starship設定
+│   ├── aerospace/               # AeroSpace (macOS)
+│   ├── borders/                 # Borders (macOS)
+│   └── sketchybar/              # Sketchybar (macOS)
+├── docs/                        # ドキュメント
+│   ├── TROUBLESHOOTING.md       # トラブルシューティング
+│   └── plans/                   # 計画ドキュメント
+├── agent/                       # エージェント自動化プロジェクト
+├── .zshrc                       # Zsh設定
+├── .tmux.conf                   # tmux設定
+└── .vimrc                       # Vim設定
 ```
 
 ## 手動セットアップ

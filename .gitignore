@@ -1,1 +1,24 @@
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Log files
+*.log
+firebase-debug.log
+
+# Backup files
+*.bak
+*.orig
+*.swp
+*~
+.zshrc.org
+
+# Editor directories
+.vscode/
+.idea/
+
+# Local configuration
+*.local

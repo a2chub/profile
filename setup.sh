@@ -3,10 +3,12 @@
 # Dotfiles Setup Script
 # Supports: macOS, Ubuntu/Debian, Fedora/RHEL
 #
-set -e
+set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 SCRIPTS_DIR="$DOTFILES_DIR/scripts"
+SETUP_DIR="$SCRIPTS_DIR/setup"
+PACKAGES_DIR="$DOTFILES_DIR/packages"
 
 # Colors for output
 RED='\033[0;31m'
@@ -64,6 +66,9 @@ main() {
     SKIP_PACKAGES=false
     SKIP_LINKS=false
     SKIP_TOOLS=false
+    SETUP_SSH=false
+    SETUP_DOCKER=false
+    INSTALL_APPS=false
 
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -71,6 +76,9 @@ main() {
             --skip-links) SKIP_LINKS=true; shift ;;
             --skip-tools) SKIP_TOOLS=true; shift ;;
             --links-only) SKIP_PACKAGES=true; SKIP_TOOLS=true; shift ;;
+            --setup-ssh) SETUP_SSH=true; shift ;;
+            --setup-docker) SETUP_DOCKER=true; shift ;;
+            --install-apps) INSTALL_APPS=true; shift ;;
             -h|--help)
                 echo "Usage: ./setup.sh [options]"
                 echo ""
@@ -79,6 +87,9 @@ main() {
                 echo "  --skip-links      Skip symlink creation"
                 echo "  --skip-tools      Skip tool installation (Starship, etc.)"
                 echo "  --links-only      Only create symlinks"
+                echo "  --setup-ssh       Setup SSH key for GitHub"
+                echo "  --setup-docker    Install Docker"
+                echo "  --install-apps    Run legacy app installation script"
                 echo "  -h, --help        Show this help"
                 exit 0
                 ;;
@@ -108,6 +119,36 @@ main() {
         bash "$SCRIPTS_DIR/install-tools.sh" "$OS"
     else
         print_warning "Skipping tool installation"
+    fi
+
+    # Optional: Legacy app installation
+    if [[ "$INSTALL_APPS" == true ]]; then
+        print_header "Installing Apps (Legacy Script)"
+        if [[ -f "$SETUP_DIR/install-apps.sh" ]]; then
+            bash "$SETUP_DIR/install-apps.sh"
+        else
+            print_error "install-apps.sh not found in $SETUP_DIR"
+        fi
+    fi
+
+    # Optional: SSH setup
+    if [[ "$SETUP_SSH" == true ]]; then
+        print_header "Setting up SSH"
+        if [[ -f "$SETUP_DIR/setup-ssh.sh" ]]; then
+            bash "$SETUP_DIR/setup-ssh.sh"
+        else
+            print_error "setup-ssh.sh not found in $SETUP_DIR"
+        fi
+    fi
+
+    # Optional: Docker installation
+    if [[ "$SETUP_DOCKER" == true ]]; then
+        print_header "Installing Docker"
+        if [[ -f "$SETUP_DIR/install-docker.sh" ]]; then
+            bash "$SETUP_DIR/install-docker.sh"
+        else
+            print_error "install-docker.sh not found in $SETUP_DIR"
+        fi
     fi
 
     print_header "Setup Complete!"
