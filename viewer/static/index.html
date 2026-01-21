@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dotfiles Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Dotfiles Dashboard</h1>
+        <button id="reload-btn" class="btn btn-secondary">Reload</button>
+    </header>
+
+    <main class="main">
+        <nav class="sidebar">
+            <section class="nav-section">
+                <h2 class="nav-title">Configs</h2>
+                <ul id="config-list" class="nav-list"></ul>
+            </section>
+
+            <section class="nav-section">
+                <h2 class="nav-title">Packages</h2>
+                <ul class="nav-list">
+                    <li>
+                        <button class="nav-item nav-expandable" data-category="formulae">
+                            <span class="expand-icon">+</span> Formulae
+                            <span id="formulae-count" class="badge"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item nav-expandable" data-category="casks">
+                            <span class="expand-icon">+</span> Casks
+                            <span id="casks-count" class="badge"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item nav-expandable" data-category="taps">
+                            <span class="expand-icon">+</span> Taps
+                            <span id="taps-count" class="badge"></span>
+                        </button>
+                    </li>
+                </ul>
+            </section>
+        </nav>
+
+        <section class="content">
+            <div id="welcome-view" class="view active">
+                <div class="welcome">
+                    <h2>Dotfiles Dashboard</h2>
+                    <p>左のサイドバーから設定ファイルまたはパッケージを選択してください。</p>
+                    <div class="stats" id="stats"></div>
+                </div>
+            </div>
+
+            <div id="config-view" class="view">
+                <div class="content-header">
+                    <div class="file-info">
+                        <h2 id="config-title"></h2>
+                        <div id="config-path" class="file-path">
+                            <span class="path-icon">folder</span>
+                            <span class="path-text"></span>
+                        </div>
+                        <div class="meta">
+                            <span id="config-software" class="tag"></span>
+                            <span id="config-format" class="tag tag-secondary"></span>
+                            <span id="config-size" class="meta-text"></span>
+                        </div>
+                    </div>
+                    <div class="links">
+                        <a id="config-docs" href="#" target="_blank" class="btn btn-link">Docs</a>
+                        <a id="config-repo" href="#" target="_blank" class="btn btn-link">GitHub</a>
+                        <button id="history-btn" class="btn btn-secondary">History</button>
+                    </div>
+                </div>
+
+                <div class="mode-toggle">
+                    <button id="view-mode-btn" class="btn btn-mode active">View</button>
+                    <button id="edit-mode-btn" class="btn btn-mode">Edit</button>
+                </div>
+
+                <div class="editor-container">
+                    <div id="code-viewer" class="code-viewer">
+                        <div id="line-numbers" class="line-numbers"></div>
+                        <pre><code id="code-content" class="code-content"></code></pre>
+                    </div>
+                    <textarea id="config-editor" class="editor hidden" spellcheck="false"></textarea>
+                </div>
+
+                <div class="editor-actions">
+                    <button id="save-btn" class="btn btn-primary hidden" disabled>Save</button>
+                    <button id="discard-btn" class="btn btn-secondary hidden" disabled>Discard</button>
+                    <button id="download-btn" class="btn btn-secondary">Download</button>
+                    <span id="save-status" class="status-message"></span>
+                </div>
+            </div>
+
+            <div id="packages-view" class="view">
+                <div class="content-header">
+                    <h2 id="packages-title"></h2>
+                    <div class="search-box">
+                        <input type="text" id="package-search" placeholder="Search packages..." class="search-input">
+                    </div>
+                </div>
+                <ul id="packages-list" class="packages-list"></ul>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- History Panel -->
+    <div id="history-panel" class="history-panel">
+        <div class="history-panel-header">
+            <h3>Commit History</h3>
+            <button id="history-close-btn" class="btn-close">×</button>
+        </div>
+        <div class="history-panel-content">
+            <div id="history-list" class="history-list"></div>
+            <div id="diff-view" class="diff-view hidden">
+                <div class="diff-header">
+                    <span id="diff-commit-info"></span>
+                </div>
+                <pre id="diff-content" class="diff-content"></pre>
+            </div>
+        </div>
+    </div>
+    <div id="history-overlay" class="history-overlay"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

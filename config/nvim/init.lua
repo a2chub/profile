@@ -116,6 +116,9 @@ require('jetpack.paq'){
   {"nvim-lua/plenary.nvim"},
   {"nvim-tree/nvim-web-devicons"},
   {"MunifTanjim/nui.nvim"},
+
+  -- Markdownバッファ内プレビュー
+  {'MeanderingProgrammer/render-markdown.nvim'},
 }
 
 -- 例: Telescopeのキーバインド設定
@@ -201,5 +204,49 @@ require("neo-tree").setup({
 })
 
 
+-- =============================================================================
+-- Render Markdown 設定（バッファ内プレビュー）
+-- =============================================================================
+require('render-markdown').setup({
+  enabled = true,
+  render_modes = { 'n', 'c' },  -- ノーマルモード・コマンドモードで有効
 
+  -- 見出しの装飾
+  heading = {
+    enabled = true,
+    sign = false,  -- 古いNeovimビルドではsign機能を無効化
+    icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+  },
+
+  -- コードブロック
+  code = {
+    enabled = true,
+    sign = false,
+    style = 'normal',  -- 言語名ヘッダーのゼブラを除去（背景のみ表示）
+    border = 'none',
+  },
+
+  -- リストのバレット
+  bullet = {
+    enabled = true,
+    icons = { '●', '○', '◆', '◇' },
+  },
+
+  -- チェックボックス
+  checkbox = {
+    enabled = true,
+    unchecked = { icon = '󰄱 ' },
+    checked = { icon = '󰱒 ' },
+  },
+
+  -- テーブル
+  pipe_table = {
+    enabled = true,
+    style = 'full',
+  },
+})
+
+-- キーバインド
+vim.keymap.set('n', '<Leader>mr', ':RenderMarkdown toggle<CR>',
+  { noremap = true, silent = true, desc = 'Toggle Render Markdown' })
 

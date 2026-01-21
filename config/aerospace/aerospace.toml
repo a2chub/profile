@@ -1,0 +1,196 @@
+# このファイルを ~/.aerospace.toml に配置してください
+# 配置後、お好みに合わせて編集できます
+
+# macOSユーザーセッションへのログイン後に実行するコマンドを追加できます
+# 'after-login-command' を動作させるには 'start-at-login' を 'true' に設定する必要があります
+# 利用可能なコマンド: https://nikitabobko.github.io/AeroSpace/commands
+after-login-command = []
+
+# AeroSpace起動後に実行するコマンドを追加できます
+# 'after-startup-command' は 'after-login-command' の後に実行されます
+# 利用可能なコマンド: https://nikitabobko.github.io/AeroSpace/commands
+after-startup-command = [
+    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=8.0'
+
+]
+
+# ログイン時にAeroSpaceを起動する
+start-at-login = true
+
+# 正規化設定。参照: https://nikitabobko.github.io/AeroSpace/guide#normalization
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#layouts
+# 'accordion-padding' はアコーディオンレイアウトのパディングサイズを指定します
+# 0に設定するとパディング機能を無効化できます
+accordion-padding = 100
+
+# 設定可能な値: tiles|accordion
+default-root-container-layout = 'tiles'
+
+# 設定可能な値: horizontal|vertical|auto
+# 'auto' の場合: 横長モニター（幅 > 高さ）は水平方向、
+#               縦長モニター（高さ > 幅）は垂直方向になります
+default-root-container-orientation = 'auto'
+
+# フォーカスしているモニターが変わったときにマウスを追従させる
+# この動作が不要な場合は設定から削除してください
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#move-mouse
+# デフォルト値（キーを省略した場合）: on-focused-monitor-changed = []
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# このフラグを切り替えることでmacOSの「アプリケーションを隠す」（cmd-h）機能を実質的に無効化できます
+# この機能を使わないのに誤ってcmd-hやcmd-alt-hを押してしまう場合に便利です
+# 参照: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
+automatically-unhide-macos-hidden-apps = false
+
+# 設定可能な値: (qwerty|dvorak)
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#key-mapping
+[key-mapping]
+preset = 'qwerty'
+
+# ウィンドウ間のギャップ（inner-*）とモニター端からのギャップ（outer-*）
+# 設定可能な値:
+# - 固定値:       gaps.outer.top = 8
+# - モニター別:   gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+#                 この例では、マッチしない場合のデフォルト値は24です
+#                 モニターパターンは 'workspace-to-monitor-force-assignment' と同じ形式です
+#                 参照: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+[gaps]
+inner.horizontal = 10
+inner.vertical =   10
+outer.left =       10
+outer.bottom =     10
+outer.top =        10
+outer.right =      10
+
+# 'main' バインディングモードの宣言
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# 'main' バインディングモードは必ず存在する必要があります
+# デフォルト値（キーを省略した場合）: mode.main.binding = {}
+[mode.main.binding]
+
+# 使用可能なすべてのキー:
+# - アルファベット:     a, b, c, ..., z
+# - 数字:              0, 1, 2, ..., 9
+# - テンキー数字:       keypad0, keypad1, keypad2, ..., keypad9
+# - ファンクションキー: f1, f2, ..., f20
+# - 特殊キー:          minus, equal, period, comma, slash, backslash, quote, semicolon, backtick,
+#                      leftSquareBracket, rightSquareBracket, space, enter, esc, backspace, tab
+# - テンキー特殊:       keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
+#                      keypadMinus, keypadMultiply, keypadPlus
+# - 矢印キー:          left, down, up, right
+
+# 使用可能なすべての修飾キー: cmd, alt, ctrl, shift
+
+# 使用可能なすべてのコマンド: https://nikitabobko.github.io/AeroSpace/commands
+
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
+# 以下の行のコメントを外すと、alt + enterでターミナルを開けます（i3と同様）
+# alt-enter = '''exec-and-forget osascript -e '
+# tell application "Terminal"
+#     do script
+#     activate
+# end tell'
+# '''
+
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#layout
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#focus
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# 次のモニターへフォーカスを移動 / 前のモニターへ移動
+alt-n = 'focus-monitor next'
+alt-p = 'focus-monitor prev'
+
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#move
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# ウィンドウを次のモニターへ移動
+alt-shift-n = 'move-node-to-monitor next'
+alt-shift-p = 'move-node-to-monitor prev'
+
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#resize
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
+
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#workspace
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+
+alt-q = 'workspace Q'
+alt-w = 'workspace W'
+alt-e = 'workspace E'
+
+alt-a = 'workspace A'
+alt-s = 'workspace S'
+alt-d = 'workspace D'
+
+alt-z = 'workspace Z'
+alt-x = 'workspace X'
+alt-c = 'workspace C'
+
+
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
+
+alt-shift-q = 'move-node-to-workspace Q'
+alt-shift-w = 'move-node-to-workspace W'
+alt-shift-e = 'move-node-to-workspace E'
+
+alt-shift-a = 'move-node-to-workspace A'
+alt-shift-s = 'move-node-to-workspace S'
+alt-shift-d = 'move-node-to-workspace D'
+
+alt-shift-z = 'move-node-to-workspace Z'
+alt-shift-x = 'move-node-to-workspace X'
+alt-shift-c = 'move-node-to-workspace C'
+
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
+alt-tab = 'workspace-back-and-forth'
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+# 参照: https://nikitabobko.github.io/AeroSpace/commands#mode
+alt-shift-semicolon = 'mode service'
+
+# 'service' バインディングモードの宣言
+# 参照: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main'] # レイアウトをリセット
+f = ['layout floating tiling', 'mode main'] # フローティングとタイリングを切り替え
+backspace = ['close-all-windows-but-current', 'mode main']
+
+# stickyはまだサポートされていません https://github.com/nikitabobko/AeroSpace/issues/2
+#s = ['layout sticky tiling', 'mode main']
+
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
