@@ -6,6 +6,10 @@ set -e
 
 OS="$1"
 
+# Script directory and paths
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PACKAGES_DIR="$(dirname "$SCRIPT_DIR")/packages"
+
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
@@ -64,15 +68,23 @@ install_homebrew() {
 install_macos() {
     install_homebrew
 
-    echo "Installing packages via Homebrew..."
-    for pkg in "${MACOS_PACKAGES[@]}"; do
-        if brew list "$pkg" &>/dev/null; then
-            print_success "$pkg already installed"
-        else
-            echo "Installing $pkg..."
-            brew install "$pkg" || print_warning "Failed to install $pkg"
-        fi
-    done
+    BREWFILE="$PACKAGES_DIR/Brewfile"
+    if [[ -f "$BREWFILE" ]]; then
+        echo "Installing packages via Brewfile..."
+        brew bundle --file="$BREWFILE" --no-lock
+        print_success "Brewfile packages installed"
+    else
+        # Fallback: install basic packages individually
+        echo "Brewfile not found, installing basic packages via Homebrew..."
+        for pkg in "${MACOS_PACKAGES[@]}"; do
+            if brew list "$pkg" &>/dev/null; then
+                print_success "$pkg already installed"
+            else
+                echo "Installing $pkg..."
+                brew install "$pkg" || print_warning "Failed to install $pkg"
+            fi
+        done
+    fi
 }
 
 # Install packages on Debian/Ubuntu
