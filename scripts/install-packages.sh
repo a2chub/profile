@@ -71,7 +71,7 @@ install_macos() {
     BREWFILE="$PACKAGES_DIR/Brewfile"
     if [[ -f "$BREWFILE" ]]; then
         echo "Installing packages via Brewfile..."
-        brew bundle --file="$BREWFILE" --no-lock
+        brew bundle --file="$BREWFILE"
         print_success "Brewfile packages installed"
     else
         # Fallback: install basic packages individually
