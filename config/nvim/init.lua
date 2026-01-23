@@ -119,6 +119,9 @@ require('jetpack.paq'){
 
   -- Markdownバッファ内プレビュー
   {'MeanderingProgrammer/render-markdown.nvim'},
+
+  -- 画像プレビュー (Kitty Graphics Protocol)
+  {'3rd/image.nvim'},
 }
 
 -- 例: Telescopeのキーバインド設定
@@ -249,4 +252,26 @@ require('render-markdown').setup({
 -- キーバインド
 vim.keymap.set('n', '<Leader>mr', ':RenderMarkdown toggle<CR>',
   { noremap = true, silent = true, desc = 'Toggle Render Markdown' })
+
+
+-- =============================================================================
+-- Image.nvim 設定（画像プレビュー）
+-- =============================================================================
+require('image').setup({
+  backend = 'kitty',  -- Ghostty は Kitty Graphics Protocol を使用
+  integrations = {
+    markdown = {
+      enabled = true,
+      clear_in_insert_mode = false,
+      only_render_image_at_cursor = false,
+    },
+  },
+  max_width = 100,
+  max_height = 12,
+  max_height_window_percentage = math.huge,
+  max_width_window_percentage = math.huge,
+  window_overlap_clear_enabled = false,
+  editor_only_render_when_focused = false,
+  tmux_show_only_in_active_window = false,
+})
 
