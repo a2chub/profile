@@ -52,6 +52,21 @@ install_vim_jetpack_vim() {
     fi
 }
 
+# Install Lua magick binding for image.nvim
+install_lua_magick() {
+    if command -v luarocks &>/dev/null; then
+        if luarocks --local list 2>/dev/null | grep -q "magick"; then
+            print_success "Lua magick already installed"
+        else
+            echo "Installing Lua magick binding..."
+            luarocks --local --lua-version=5.1 install magick
+            print_success "Lua magick installed"
+        fi
+    else
+        print_warning "luarocks not found, skipping magick installation"
+    fi
+}
+
 # Install Nerd Fonts (optional, for icons)
 install_nerd_fonts() {
     if [[ "$OS" == "macos" ]]; then
@@ -95,6 +110,7 @@ echo "Installing additional tools..."
 install_starship
 install_vim_jetpack
 install_vim_jetpack_vim
+install_lua_magick
 install_nerd_fonts
 sync_nvim_plugins
 
