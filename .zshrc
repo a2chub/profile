@@ -260,3 +260,10 @@ precmd() {
 eval "$(starship init zsh)"
 
 alias claude-mem='bun "/Users/atusi/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/atusi/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/atusi/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/atusi/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/atusi/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="$HOME/.local/bin:$PATH"

@@ -23,7 +23,7 @@ create_link() {
     # Check if source exists
     if [[ ! -e "$src" ]]; then
         print_warning "Source not found: $src"
-        return 1
+        return 0
     fi
 
     # Create parent directory if needed

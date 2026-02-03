@@ -26,7 +26,7 @@ $conda\
 $pixi\
 [ ](fg:color_bg3)\
 $fill\
-[](fg:color_bg1)$time[ ](fg:color_bg1)\
+[](fg:color_bg1)$hostname$time[ ](fg:color_bg1)\
 $line_break$character"""
 
 palette = 'gruvbox_dark'
@@ -162,6 +162,12 @@ format = '[[ $symbol( $environment) ](fg:#83a598 bg:color_bg3)]($style)'
 [pixi]
 style = "bg:color_bg3"
 format = '[[ $symbol( $version)( $environment) ](fg:color_fg0 bg:color_bg3)]($style)'
+
+[hostname]
+disabled = false
+ssh_only = false
+style = "bg:color_bg1"
+format = '[[ 󰒋 $hostname ](fg:color_fg0 bg:color_bg1)]($style)'
 
 [time]
 disabled = false

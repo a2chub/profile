@@ -71,8 +71,11 @@ install_macos() {
     BREWFILE="$PACKAGES_DIR/Brewfile"
     if [[ -f "$BREWFILE" ]]; then
         echo "Installing packages via Brewfile..."
-        brew bundle --file="$BREWFILE"
-        print_success "Brewfile packages installed"
+        if brew bundle --file="$BREWFILE"; then
+            print_success "Brewfile packages installed"
+        else
+            print_warning "Some Brewfile packages failed to install (sudo-requiring casks may need manual installation)"
+        fi
     else
         # Fallback: install basic packages individually
         echo "Brewfile not found, installing basic packages via Homebrew..."
