@@ -193,6 +193,9 @@ export PATH=/Users/atusi/.opencode/bin:$PATH
 # Antigravity
 export PATH="/Users/atusi/.antigravity/antigravity/bin:$PATH"
 
+# Claude Code
+export PATH="$HOME/.local/bin:$PATH"
+
 
 # ==============================================================================
 # 8. その他
@@ -266,4 +269,3 @@ if [ -f '/Users/atusi/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/atusi/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/atusi/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-export PATH="$HOME/.local/bin:$PATH"

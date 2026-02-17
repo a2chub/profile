@@ -85,13 +85,26 @@ install_nerd_fonts() {
         else
             echo "Installing Nerd Fonts..."
             mkdir -p "$fonts_dir"
-            cd /tmp
-            curl -fLo "Hack.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip
-            unzip -o Hack.zip -d "$fonts_dir"
-            rm Hack.zip
+            (
+                cd /tmp
+                curl -fLo "Hack.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip
+                unzip -o Hack.zip -d "$fonts_dir"
+                rm Hack.zip
+            )
             fc-cache -fv "$fonts_dir" 2>/dev/null || true
             print_success "Nerd Fonts installed"
         fi
+    fi
+}
+
+# Install Claude Code
+install_claude_code() {
+    if command -v claude &>/dev/null; then
+        print_success "Claude Code already installed"
+    else
+        echo "Installing Claude Code..."
+        curl -fsSL https://claude.ai/install.sh | bash
+        print_success "Claude Code installed"
     fi
 }
 
@@ -112,6 +125,7 @@ install_vim_jetpack
 install_vim_jetpack_vim
 install_lua_magick
 install_nerd_fonts
+install_claude_code
 sync_nvim_plugins
 
 print_success "Tool installation complete"

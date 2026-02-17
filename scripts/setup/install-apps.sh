@@ -35,7 +35,13 @@ check_and_install_brew() {
 install_apps() {
     if [ "$OS" == "Linux" ]; then
         sudo apt update
-        sudo apt install -y vim tmux
+        for pkg in vim tmux; do
+            if dpkg -l "$pkg" &>/dev/null; then
+                echo "${pkg}は既にインストールされています。"
+            else
+                sudo apt install -y "$pkg"
+            fi
+        done
         # miseのインストールまたはアップデート
         if ! command -v mise &> /dev/null; then
             echo "miseが見つかりません。インストールを行います。"
@@ -46,7 +52,13 @@ install_apps() {
         fi
     elif [ "$OS" == "MacOS" ]; then
         check_and_install_brew
-        brew install vim tmux
+        for pkg in vim tmux; do
+            if brew list "$pkg" &>/dev/null; then
+                echo "${pkg}は既にインストールされています。"
+            else
+                brew install "$pkg"
+            fi
+        done
         # miseのインストールまたはアップデート
         if ! command -v mise &> /dev/null; then
             echo "miseが見つかりません。インストールを行います。"
