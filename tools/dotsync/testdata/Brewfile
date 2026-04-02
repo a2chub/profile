@@ -1,0 +1,28 @@
+# =============================================================================
+# テスト用 Brewfile
+# =============================================================================
+
+# Taps
+tap "felixkratz/formulae"
+tap "nikitabobko/tap"
+
+# --- CLI ツール ---
+brew "curl"
+brew "wget"
+brew "fzf"
+brew "gh"
+brew "htop"
+
+# --- エディタ・ターミナル ---
+brew "neovim"
+brew "tmux"
+brew "starship"
+
+# --- Tap Formulae ---
+brew "felixkratz/formulae/borders"
+brew "felixkratz/formulae/sketchybar"
+
+# --- Casks ---
+cask "ghostty"
+cask "iterm2"
+cask "aerospace"
