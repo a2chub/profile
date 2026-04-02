@@ -5,47 +5,13 @@
 set -e
 
 OS="$1"
+FULL_INSTALL="${2:-false}"
 
 # Script directory and paths
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGES_DIR="$(dirname "$SCRIPT_DIR")/packages"
 
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
-print_success() { echo -e "${GREEN}[OK]${NC} $1"; }
-print_warning() { echo -e "${YELLOW}[WARN]${NC} $1"; }
-
-# Common packages to install
-COMMON_PACKAGES=(
-    git
-    curl
-    wget
-    tmux
-    neovim
-    ripgrep
-    fd-find
-    jq
-    tree
-    htop
-)
-
-# macOS specific packages
-MACOS_PACKAGES=(
-    git
-    curl
-    wget
-    tmux
-    neovim
-    ripgrep
-    fd
-    jq
-    tree
-    htop
-    coreutils
-    gnu-sed
-)
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/colors.sh"
 
 # Install Homebrew (macOS)
 install_homebrew() {
@@ -69,17 +35,30 @@ install_macos() {
     install_homebrew
 
     BREWFILE="$PACKAGES_DIR/Brewfile"
+    BREWFILE_OPTIONAL="$PACKAGES_DIR/Brewfile.optional"
     if [[ -f "$BREWFILE" ]]; then
-        echo "Installing packages via Brewfile..."
+        echo "Installing base packages via Brewfile..."
         if brew bundle --file="$BREWFILE"; then
             print_success "Brewfile packages installed"
         else
             print_warning "Some Brewfile packages failed to install (sudo-requiring casks may need manual installation)"
         fi
+
+        # オプションパッケージ（--full 指定時のみ）
+        if [[ "$FULL_INSTALL" == true ]] && [[ -f "$BREWFILE_OPTIONAL" ]]; then
+            echo "Installing optional packages via Brewfile.optional..."
+            if brew bundle --file="$BREWFILE_OPTIONAL"; then
+                print_success "Optional packages installed"
+            else
+                print_warning "Some optional packages failed to install"
+            fi
+        fi
     else
-        # Fallback: install basic packages individually
-        echo "Brewfile not found, installing basic packages via Homebrew..."
-        for pkg in "${MACOS_PACKAGES[@]}"; do
+        # Fallback: Brewfile が見つからない場合は基本パッケージを個別インストール
+        print_warning "Brewfile not found at $BREWFILE"
+        local fallback_packages=(git curl wget tmux neovim ripgrep fd jq tree htop)
+        echo "Installing basic packages via Homebrew..."
+        for pkg in "${fallback_packages[@]}"; do
             if brew list "$pkg" &>/dev/null; then
                 print_success "$pkg already installed"
             else

@@ -10,30 +10,7 @@ SCRIPTS_DIR="$DOTFILES_DIR/scripts"
 SETUP_DIR="$SCRIPTS_DIR/setup"
 PACKAGES_DIR="$DOTFILES_DIR/packages"
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
-
-print_header() {
-    echo -e "\n${BLUE}===================================================${NC}"
-    echo -e "${BLUE}  $1${NC}"
-    echo -e "${BLUE}===================================================${NC}\n"
-}
-
-print_success() {
-    echo -e "${GREEN}[OK]${NC} $1"
-}
-
-print_warning() {
-    echo -e "${YELLOW}[WARN]${NC} $1"
-}
-
-print_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
+source "$SCRIPTS_DIR/lib/colors.sh"
 
 # Detect OS
 detect_os() {
@@ -66,6 +43,7 @@ main() {
     SKIP_PACKAGES=false
     SKIP_LINKS=false
     SKIP_TOOLS=false
+    FULL_INSTALL=false
     SETUP_SSH=false
     SETUP_DOCKER=false
     INSTALL_APPS=false
@@ -75,6 +53,7 @@ main() {
             --skip-packages) SKIP_PACKAGES=true; shift ;;
             --skip-links) SKIP_LINKS=true; shift ;;
             --skip-tools) SKIP_TOOLS=true; shift ;;
+            --full) FULL_INSTALL=true; shift ;;
             --links-only) SKIP_PACKAGES=true; SKIP_TOOLS=true; shift ;;
             --setup-ssh) SETUP_SSH=true; shift ;;
             --setup-docker) SETUP_DOCKER=true; shift ;;
@@ -86,6 +65,7 @@ main() {
                 echo "  --skip-packages   Skip package installation"
                 echo "  --skip-links      Skip symlink creation"
                 echo "  --skip-tools      Skip tool installation (Starship, etc.)"
+                echo "  --full            Install optional heavy packages (octave, whisper, etc.)"
                 echo "  --links-only      Only create symlinks"
                 echo "  --setup-ssh       Setup SSH key for GitHub"
                 echo "  --setup-docker    Install Docker"
@@ -100,7 +80,7 @@ main() {
     # Step 1: Install packages
     if [[ "$SKIP_PACKAGES" == false ]]; then
         print_header "Step 1: Installing Packages"
-        bash "$SCRIPTS_DIR/install-packages.sh" "$OS"
+        bash "$SCRIPTS_DIR/install-packages.sh" "$OS" "$FULL_INSTALL"
     else
         print_warning "Skipping package installation"
     fi

@@ -1,0 +1,6 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[user]
+# 環境ごとに設定してください
+# name = "your-name"
+# email = "your-email@example.com"

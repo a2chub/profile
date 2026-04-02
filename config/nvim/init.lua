@@ -50,12 +50,6 @@ vim.keymap.set('n', ';', ':')
 -- コロンをセミコロンとして動作させる
 vim.keymap.set('n', ':', ';')
 
--- NERDTree のキーマッピング
-vim.keymap.set('n', ';t', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
-
--- NERDTree の設定
-vim.g.NERDTreeMapOpenSplit = "-"
-
 -- NeoTree の設定
 vim.keymap.set('n', '<C-n>', ':Neotree toggle<CR>')
 
@@ -103,7 +97,6 @@ end
 vim.cmd('packadd vim-jetpack')
 require('jetpack.paq'){
   {'tani/vim-jetpack', opt = true},
-  {'preservim/nerdtree'},
   {'nvim-telescope/telescope.nvim'},
   {'nvim-treesitter/nvim-treesitter'},
   {'gruvbox-community/gruvbox'},

@@ -37,3 +37,17 @@ token.json
 .gcp/
 .netrc
 .npmrc
+credentials/
+
+# gh CLI の認証情報（hosts.yml にトークンが入る可能性がある）
+config/gh/hosts.yml
+
+# jj の個人設定（各マシンごとに設定）
+config/jj/config.toml
+
+# AI ツールの作業ディレクトリ
+.specstory/
+
+# dotsync ビルド成果物
+tools/dotsync/dotsync
+tools/dotsync/testdata/sample-config/

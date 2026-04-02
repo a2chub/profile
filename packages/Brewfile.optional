@@ -1,0 +1,69 @@
+# =============================================================================
+# オプションパッケージ (Brewfile.optional)
+# --full オプション指定時に追加インストールされる重量パッケージ
+# =============================================================================
+
+# Taps
+tap "hashicorp/tap"
+tap "manaflow-ai/cmux"
+tap "xdevplatform/tap"
+
+# --- 言語ランタイム (重量) ---
+brew "go"                  # Go 言語 (~258MB)
+brew "node"                # Node.js (~266MB)
+brew "python-tk@3.13"      # Python Tkinter バインディング
+
+# --- 科学計算・AI ---
+brew "octave"              # 科学計算 (~70MB + 依存 1.4GB以上)
+brew "openai-whisper"       # 音声認識 (+ pytorch ~360MB)
+brew "graphviz"            # グラフ描画
+
+# --- GUI フレームワーク ---
+brew "qt"                  # Qt フレームワーク (~452MB)
+
+# --- メディアライブラリ ---
+brew "libass"
+brew "libbluray"
+brew "libdvdcss"
+brew "liblqr"
+brew "libraw"
+brew "librist"
+brew "libsoxr"
+brew "libssh"
+brew "libultrahdr"
+brew "libvidstab"
+brew "libzip"
+brew "portaudio"
+brew "rubberband"
+brew "sip"
+brew "spdlog"
+brew "tesseract"
+brew "zeromq"
+brew "zimg"
+brew "log4cxx"
+
+# --- マルチメディアコーデック・ライブラリ ---
+brew "aribb24"
+brew "frei0r"
+brew "opencore-amr"
+brew "rav1e"
+brew "rtmpdump"
+brew "snappy"
+brew "speex"
+brew "srt"
+brew "theora"
+brew "xvid"
+
+# --- その他 ---
+brew "console_bridge"
+brew "cunit"
+brew "python@3.12"
+
+# --- Casks (重量) ---
+cask "temurin@21"          # Java JDK (~191MB)
+cask "xquartz"             # X11 サーバ (~103MB)
+cask "kiro"                # Kiro IDE
+cask "cmux"                # Claude MUX
+
+# --- Claude Squad ---
+brew "claude-squad"

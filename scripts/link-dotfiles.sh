@@ -6,14 +6,12 @@ set -e
 
 DOTFILES_DIR="$1"
 
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m'
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/colors.sh"
 
-print_success() { echo -e "${GREEN}[OK]${NC} $1"; }
-print_warning() { echo -e "${YELLOW}[WARN]${NC} $1"; }
-print_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
+if [[ -z "$DOTFILES_DIR" ]]; then
+    print_error "Usage: link-dotfiles.sh <dotfiles-dir>"
+    exit 1
+fi
 
 # Create symlink with backup
 create_link() {
@@ -73,7 +71,22 @@ create_link "$DOTFILES_DIR/config/aerospace/aerospace.toml" "$HOME/.config/aeros
 # Borders (window border styling)
 create_link "$DOTFILES_DIR/config/borders" "$HOME/.config/borders"
 
-# Sketchybar
-create_link "$DOTFILES_DIR/config/sketchybar" "$HOME/.config/sketchybar"
+# Zellij terminal multiplexer
+create_link "$DOTFILES_DIR/config/zellij" "$HOME/.config/zellij"
+
+# jj (Jujutsu) version control
+create_link "$DOTFILES_DIR/config/jj" "$HOME/.config/jj"
+
+create_link "$DOTFILES_DIR/config/.starship.toml" "$HOME/.config/.starship.toml"
+
+create_link "$DOTFILES_DIR/config/aerospace" "$HOME/.config/aerospace"
+
+create_link "$DOTFILES_DIR/config/gh" "$HOME/.config/gh"
+
+create_link "$DOTFILES_DIR/config/ghostty" "$HOME/.config/ghostty"
+
+create_link "$DOTFILES_DIR/config/openspec" "$HOME/.config/openspec"
+
+create_link "$DOTFILES_DIR/config/uv" "$HOME/.config/uv"
 
 print_success "All symlinks created"

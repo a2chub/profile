@@ -6,23 +6,7 @@ set -e
 
 OS="$1"
 
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
-print_success() { echo -e "${GREEN}[OK]${NC} $1"; }
-print_warning() { echo -e "${YELLOW}[WARN]${NC} $1"; }
-
-# Install Starship prompt
-install_starship() {
-    if command -v starship &>/dev/null; then
-        print_success "Starship already installed"
-    else
-        echo "Installing Starship..."
-        curl -sS https://starship.rs/install.sh | sh -s -- -y
-        print_success "Starship installed"
-    fi
-}
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/colors.sh"
 
 # Install vim-jetpack for Neovim
 install_vim_jetpack() {
@@ -67,47 +51,6 @@ install_lua_magick() {
     fi
 }
 
-# Install Nerd Fonts (optional, for icons)
-install_nerd_fonts() {
-    if [[ "$OS" == "macos" ]]; then
-        if brew list --cask font-hack-nerd-font &>/dev/null; then
-            print_success "Nerd Fonts already installed"
-        else
-            echo "Installing Nerd Fonts..."
-            brew tap homebrew/cask-fonts 2>/dev/null || true
-            brew install --cask font-hack-nerd-font || print_warning "Failed to install Nerd Fonts"
-        fi
-    else
-        # Linux: Download manually
-        local fonts_dir="$HOME/.local/share/fonts"
-        if [[ -f "$fonts_dir/HackNerdFont-Regular.ttf" ]]; then
-            print_success "Nerd Fonts already installed"
-        else
-            echo "Installing Nerd Fonts..."
-            mkdir -p "$fonts_dir"
-            (
-                cd /tmp
-                curl -fLo "Hack.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip
-                unzip -o Hack.zip -d "$fonts_dir"
-                rm Hack.zip
-            )
-            fc-cache -fv "$fonts_dir" 2>/dev/null || true
-            print_success "Nerd Fonts installed"
-        fi
-    fi
-}
-
-# Install Claude Code
-install_claude_code() {
-    if command -v claude &>/dev/null; then
-        print_success "Claude Code already installed"
-    else
-        echo "Installing Claude Code..."
-        curl -fsSL https://claude.ai/install.sh | bash
-        print_success "Claude Code installed"
-    fi
-}
-
 # Sync Neovim plugins
 sync_nvim_plugins() {
     if command -v nvim &>/dev/null; then
@@ -120,12 +63,9 @@ sync_nvim_plugins() {
 # Main
 echo "Installing additional tools..."
 
-install_starship
 install_vim_jetpack
 install_vim_jetpack_vim
 install_lua_magick
-install_nerd_fonts
-install_claude_code
 sync_nvim_plugins
 
 print_success "Tool installation complete"

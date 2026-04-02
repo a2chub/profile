@@ -17,6 +17,7 @@ cd ~/dotfiles
 | `--skip-packages` | パッケージインストールをスキップ |
 | `--skip-links` | シンボリックリンク作成をスキップ |
 | `--skip-tools` | ツールインストールをスキップ |
+| `--full` | オプションの重量パッケージも含めて全部インストール |
 | `--links-only` | シンボリックリンクのみ作成 |
 | `--setup-ssh` | GitHub用SSH鍵を設定 |
 | `--setup-docker` | Dockerをインストール |

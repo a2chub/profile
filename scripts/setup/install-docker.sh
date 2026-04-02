@@ -4,10 +4,7 @@
 #
 set -e
 
-GREEN='\033[0;32m'
-NC='\033[0m'
-
-print_success() { echo -e "${GREEN}[OK]${NC} $1"; }
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../lib/colors.sh"
 
 if command -v docker &>/dev/null; then
     print_success "Docker is already installed"

@@ -66,6 +66,12 @@ outer.bottom =     10
 outer.top =        10
 outer.right =      10
 
+
+[workspace-to-monitor-force-assignment]
+Z = 'secondary'   # ワークスペースZをセカンダリモニターに固定
+X = 'secondary'
+C = 'secondary'
+
 # 'main' バインディングモードの宣言
 # 参照: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # 'main' バインディングモードは必ず存在する必要があります

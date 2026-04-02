@@ -1,3 +1,8 @@
+# OPENSPEC:START
+# OpenSpec shell completions configuration
+fpath=("$HOME/.oh-my-zsh/custom/completions" $fpath)
+# OPENSPEC:END
+
 # ==============================================================================
 #                                    .zshrc
 # ==============================================================================
@@ -102,11 +107,11 @@ unset _current_month _last_archive_file _last_archived _cutoff_timestamp _temp_r
 alias vim=nvim
 
 # Python
-alias python3=/opt/homebrew/bin/python3.14
+alias python3="$(brew --prefix)/bin/python3"
 alias python=python3
 
 # AI ツール
-alias cc='claude --dangerously-skip-permissions'
+alias ccc='claude --dangerously-skip-permissions'
 
 # Git ワークフロー
 alias gsync='git fetch --all && git pull && git status'
@@ -123,12 +128,14 @@ alias dlogs='docker-compose logs -f'
 # ==============================================================================
 
 # Docker CLI補完
-fpath=(/Users/atusi/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
+fpath=($HOME/.docker/completions $fpath)
 
 # Bun補完
-[ -s "/Users/atusi/.bun/_bun" ] && source "/Users/atusi/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# 補完の初期化（fpath設定後に1回だけ実行）
+autoload -Uz compinit
+compinit
 
 
 # ==============================================================================
@@ -139,7 +146,7 @@ compinit
 [[ -f "$HOME/.rye/env" ]] && source "$HOME/.rye/env"
 
 # Node.js (pnpm)
-export PNPM_HOME="/Users/atusi/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -160,11 +167,11 @@ export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
 # ==============================================================================
 
 # Google Cloud SDK
-if [ -f '/Users/atusi/google-cloud-sdk/path.zsh.inc' ]; then
-    . '/Users/atusi/google-cloud-sdk/path.zsh.inc'
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
+    . "$HOME/google-cloud-sdk/path.zsh.inc"
 fi
-if [ -f '/Users/atusi/google-cloud-sdk/completion.zsh.inc' ]; then
-    . '/Users/atusi/google-cloud-sdk/completion.zsh.inc'
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
+    . "$HOME/google-cloud-sdk/completion.zsh.inc"
 fi
 
 # STM32 Programmer
@@ -179,19 +186,19 @@ export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgra
 export GITHUB_PERSONAL_ACCESS_TOKEN=$(security find-generic-password -a "$USER" -s "github-pat" -w 2>/dev/null)
 
 # LM Studio
-export PATH="$PATH:/Users/atusi/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 
 # Windsurf (Codeium)
-export PATH="/Users/atusi/.codeium/windsurf/bin:$PATH"
+export PATH="$HOME/.codeium/windsurf/bin:$PATH"
 
 # Kiro shell integration
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
 # OpenCode
-export PATH=/Users/atusi/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # Antigravity
-export PATH="/Users/atusi/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # Claude Code
 export PATH="$HOME/.local/bin:$PATH"
@@ -215,19 +222,6 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 # ==============================================================================
 # 9. エージェント・自動化
 # ==============================================================================
-
-# エージェントスクリプト実行ヘルパー
-agent-run() {
-    local agent=$1
-    shift
-    local script="$HOME/dotfiles/agent/agents/general/${agent}.sh"
-    if [[ -x "$script" ]]; then
-        "$script" "$@"
-    else
-        echo "Agent not found: $agent" >&2
-        return 1
-    fi
-}
 
 # ------------------------------------------------------------------------------
 # コマンドメトリクス収集
@@ -262,10 +256,4 @@ precmd() {
 # Starship prompt（最後に読み込む）
 eval "$(starship init zsh)"
 
-alias claude-mem='bun "/Users/atusi/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/atusi/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/atusi/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/atusi/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/atusi/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+alias claude-mem='bun "$HOME/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'

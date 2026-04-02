@@ -1,71 +1,58 @@
+# =============================================================================
+# 基本パッケージ (Brewfile)
+# 新規セットアップ時にデフォルトでインストールされるパッケージ
+# =============================================================================
+
 # Taps
-tap "antoniorodr/memo"
 tap "felixkratz/formulae"
-tap "hashicorp/tap"
-tap "jackchuka/tap"
 tap "nikitabobko/tap"
 tap "specstoryai/tap"
 tap "steipete/tap"
 tap "yakitrak/yakitrak"
+tap "antoniorodr/memo"
+tap "jackchuka/tap"
 
-# Formulae
-brew "act"
-brew "bundler-completion"
-brew "claude-squad"
+# --- CLI ツール ---
 brew "curl"
-brew "fastly"
+brew "wget"
 brew "fzf"
 brew "gh"
-brew "go"
-brew "graphviz"
 brew "htop"
-brew "imagemagick"
-brew "jj"
-brew "libass"
-brew "libbluray"
-brew "libdvdcss"
-brew "liblqr"
-brew "libraw"
-brew "librist"
-brew "libsoxr"
-brew "libultrahdr"
-brew "libvidstab"
-brew "libzip"
-brew "log4cxx"
-brew "luarocks"
 brew "mactop"
-brew "mkcert"
-brew "neovim"
-brew "nmap"
-brew "node"
-brew "openai-whisper"
-brew "pipx"
-brew "portaudio"
-brew "python-tk@3.13"
-brew "qt"
-brew "rclone"
-brew "rubberband"
-brew "sip"
-brew "spdlog"
-brew "starship"
-brew "tesseract"
-brew "tmux"
 brew "tree"
-brew "tree-sitter"
-brew "upx"
 brew "watch"
-brew "wget"
-brew "yarn"
-brew "yt-dlp"
-brew "zellij"
-brew "zeromq"
-brew "zimg"
+brew "jj"
+brew "mtr"
+brew "nmap"
+brew "mkcert"
+brew "upx"
 
-# Tap Formulae
+# --- エディタ・ターミナル ---
+brew "neovim"
+brew "tmux"
+brew "zellij"
+brew "starship"
+brew "tree-sitter"
+brew "luarocks"
+
+# --- 開発ツール ---
+brew "pipx"
+brew "yarn"
+brew "act"
+
+# --- メディア・画像 ---
+brew "imagemagick"
+brew "yt-dlp"
+
+# --- クラウド・インフラ ---
+brew "rclone"
+brew "terraform"
+brew "fastly"
+
+# --- Tap Formulae ---
 brew "antoniorodr/memo/memo"
 brew "felixkratz/formulae/borders"
 brew "felixkratz/formulae/sketchybar"
-brew "hashicorp/tap/terraform"
 brew "jackchuka/tap/mdschema"
 brew "specstoryai/tap/specstory"
 brew "steipete/tap/gogcli"
@@ -73,19 +60,22 @@ brew "steipete/tap/remindctl"
 brew "steipete/tap/summarize"
 brew "yakitrak/yakitrak/obsidian-cli"
 
-# Casks
+# --- シェル補完 ---
+brew "bundler-completion"
+
+# --- Casks ---
+cask "ghostty"
+cask "iterm2"
+cask "aerospace"
 cask "bunch"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-meslo-lg-nerd-font"
-cask "ghostty"
-cask "iterm2"
-cask "kiro"
 cask "ngrok"
-cask "nikitabobko/tap/aerospace"
-cask "temurin@21"
-cask "xquartz"
+cask "macdown"
+cask "qlmarkdown"
+cask "xurl"
 
-# VSCode Extensions
+# --- VSCode Extensions ---
 vscode "anthropic.claude-code"
 vscode "anysphere.cursorpyright"
 vscode "anysphere.remote-containers"
@@ -147,10 +137,11 @@ vscode "tailscale.vscode-tailscale"
 vscode "vscodevim.vim"
 vscode "vue.volar"
 
-# Go Packages
+# --- Go Packages ---
 go "github.com/goccy/bigquery-emulator/cmd/bigquery-emulator"
 go "github.com/GoogleCloudPlatform/vertex-ai-creative-studio/experiments/mcp-genmedia/mcp-avtool-go"
 go "github.com/GoogleCloudPlatform/vertex-ai-creative-studio/experiments/mcp-genmedia/mcp-genmedia-go/mcp-chirp3-go"
 go "github.com/GoogleCloudPlatform/vertex-ai-creative-studio/experiments/mcp-genmedia/mcp-genmedia-go/mcp-imagen-go"
 go "github.com/GoogleCloudPlatform/vertex-ai-creative-studio/experiments/mcp-genmedia/mcp-genmedia-go/mcp-lyria-go"
 go "github.com/GoogleCloudPlatform/vertex-ai-creative-studio/experiments/mcp-genmedia/mcp-genmedia-go/mcp-veo-go"
+brew "python-tk@3.13"
