@@ -31,6 +31,8 @@ cd ~/dotfiles
 ./setup.sh --setup-ssh
 ```
 
+> **Note**: 未知のオプションを指定した場合、`setup.sh` はエラー終了します（タイポによる意図しない部分実行を防ぐため）。利用可能なフラグは `./setup.sh --help` で確認できます。
+
 ## 対応OS
 
 - macOS (Homebrew)

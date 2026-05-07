@@ -138,6 +138,40 @@ echo $PATH | tr ':' '\n'
 exec zsh
 ```
 
+### GitHub Personal Access Token が利用できない
+
+**症状**: `gh` CLI や git push で認証エラー、`$GITHUB_PERSONAL_ACCESS_TOKEN` が未定義
+
+**背景**: 起動時オートロードを廃止し、`github_pat()` 関数経由の遅延ロードに変更しました（シェル起動時の Keychain アクセスを回避するため）。
+
+**解決策**:
+```bash
+# 必要な場面で env var に展開
+export GITHUB_PERSONAL_ACCESS_TOKEN="$(github_pat)"
+
+# または gh CLI に直接渡す
+gh auth login --with-token < <(github_pat)
+```
+
+Keychain にトークンが未登録の場合:
+```bash
+security add-generic-password -a "$USER" -s "github-pat" -w "<your-token>"
+```
+
+### Intel Mac で `python3` alias が動かない
+
+**症状**: `python3: No such file or directory` または期待と違うバージョンが起動
+
+**背景**: `.zshrc` の `python3` alias は Apple Silicon (`/opt/homebrew/bin/python3`) を前提にハードコードされています。Intel Mac は `/usr/local/bin/python3` です。
+
+**解決策**: `.zshrc` の該当行を Intel Mac 用パスに書き換える:
+```bash
+# .zshrc 内
+alias python3="/usr/local/bin/python3"  # Intel Mac
+```
+
+PATH に Homebrew が通っていれば alias を削除しても `python3` は解決されます。
+
 ---
 
 ## Neovim関連

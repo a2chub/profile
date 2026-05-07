@@ -106,15 +106,15 @@ unset _current_month _last_archive_file _last_archived _cutoff_timestamp _temp_r
 # エディタ
 alias vim=nvim
 
-# Python
-alias python3="$(brew --prefix)/bin/python3"
+# Python (Homebrew版を明示的に使用 — brew --prefixの起動時実行を回避)
+alias python3="/opt/homebrew/bin/python3"
 alias python=python3
 
 # AI ツール
 alias ccc='claude --dangerously-skip-permissions'
 
 # Git ワークフロー
-alias gsync='git fetch --all && git pull && git status'
+alias gsync='git pull --all && git status'
 alias gac='git add . && git commit'
 
 # Docker ワークフロー
@@ -182,8 +182,13 @@ export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgra
 # 7. AI・エディタツール
 # ==============================================================================
 
-# GitHub Personal Access Token (Keychainから取得)
-export GITHUB_PERSONAL_ACCESS_TOKEN=$(security find-generic-password -a "$USER" -s "github-pat" -w 2>/dev/null)
+# GitHub Personal Access Token (必要な時だけKeychainから取得する遅延ロード)
+# 使い方:
+#   export GITHUB_PERSONAL_ACCESS_TOKEN="$(github_pat)"
+#   または gh CLI など、子プロセスで参照したい場合は上記を都度実行
+github_pat() {
+    security find-generic-password -a "$USER" -s "github-pat" -w 2>/dev/null
+}
 
 # LM Studio
 export PATH="$PATH:$HOME/.lmstudio/bin"

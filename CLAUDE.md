@@ -18,6 +18,21 @@
 - `brew bundle` に `--no-lock` オプションは存在しない
 - Brewfile の配置場所は `packages/Brewfile`（プロジェクトルートではない）
 - Neovim プラグインは lazy.nvim で管理（`config/nvim/init.lua`）
+- `.zshrc` の `python3` alias は Apple Silicon (`/opt/homebrew/bin/python3`) ハードコード — Intel Mac では要書き換え
+- `GITHUB_PERSONAL_ACCESS_TOKEN` は起動時オートロードしない。`github_pat()` 関数経由で遅延取得
+
+## 編集ガイドライン
+
+### シンボリックリンクを追加するとき
+`scripts/link-dotfiles.sh` の `LINKS=()` 配列に `"<dotfiles配下の相対パス>:<リンク先絶対パス>"` 形式で1行追加するだけ。順序は機能的に無関係だが、関連リンク同士はまとめて配置する。
+
+### パッケージを追加するとき
+- macOS: `packages/Brewfile`（必須）または `packages/Brewfile.optional`（`--full` 時のみ）に追加
+- Debian/RHEL: `scripts/install-packages.sh` の `DEBIAN_PACKAGES` / `REDHAT_PACKAGES` 配列に追加。実体は共通の `_install_packages <check_cmd> <install_cmd> <pkg...>` ヘルパーが処理する
+
+### シェルスクリプトの規約
+- 全シェルスクリプトで `set -euo pipefail` を使用
+- 共通ユーティリティは `scripts/lib/colors.sh` に集約（`print_success`/`print_warning`/`print_error`/`print_info`/`print_header`）
 
 ## Skill routing
 

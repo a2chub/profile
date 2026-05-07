@@ -2,37 +2,25 @@
 #
 # Additional Tools Installation Script
 #
-set -e
+set -euo pipefail
 
 OS="$1"
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/colors.sh"
 
-# Install vim-jetpack for Neovim
+# Install vim-jetpack into the given directory
+# Args: <jetpack_path> <label>
 install_vim_jetpack() {
-    local jetpack_path="$HOME/.local/share/nvim/site/pack/jetpack/opt/vim-jetpack"
+    local jetpack_path="$1"
+    local label="$2"
 
     if [[ -d "$jetpack_path" ]]; then
-        print_success "vim-jetpack already installed"
+        print_success "vim-jetpack ($label) already installed"
     else
-        echo "Installing vim-jetpack..."
+        echo "Installing vim-jetpack ($label)..."
         mkdir -p "$(dirname "$jetpack_path")"
         git clone --depth 1 https://github.com/tani/vim-jetpack.git "$jetpack_path"
-        print_success "vim-jetpack installed"
-    fi
-}
-
-# Install vim-jetpack for Vim
-install_vim_jetpack_vim() {
-    local jetpack_path="$HOME/.vim/pack/jetpack/opt/vim-jetpack"
-
-    if [[ -d "$jetpack_path" ]]; then
-        print_success "vim-jetpack (vim) already installed"
-    else
-        echo "Installing vim-jetpack for Vim..."
-        mkdir -p "$(dirname "$jetpack_path")"
-        git clone --depth 1 https://github.com/tani/vim-jetpack.git "$jetpack_path"
-        print_success "vim-jetpack (vim) installed"
+        print_success "vim-jetpack ($label) installed"
     fi
 }
 
@@ -63,8 +51,8 @@ sync_nvim_plugins() {
 # Main
 echo "Installing additional tools..."
 
-install_vim_jetpack
-install_vim_jetpack_vim
+install_vim_jetpack "$HOME/.local/share/nvim/site/pack/jetpack/opt/vim-jetpack" "nvim"
+install_vim_jetpack "$HOME/.vim/pack/jetpack/opt/vim-jetpack" "vim"
 install_lua_magick
 sync_nvim_plugins
 

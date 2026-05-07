@@ -8,7 +8,6 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 SCRIPTS_DIR="$DOTFILES_DIR/scripts"
 SETUP_DIR="$SCRIPTS_DIR/setup"
-PACKAGES_DIR="$DOTFILES_DIR/packages"
 
 source "$SCRIPTS_DIR/lib/colors.sh"
 
@@ -73,7 +72,7 @@ main() {
                 echo "  -h, --help        Show this help"
                 exit 0
                 ;;
-            *) print_warning "Unknown option: $1"; shift ;;
+            *) print_error "Unknown option: $1"; exit 1 ;;
         esac
     done
 

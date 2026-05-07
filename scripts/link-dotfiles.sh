@@ -2,7 +2,7 @@
 #
 # Symlink Creation Script
 #
-set -e
+set -euo pipefail
 
 DOTFILES_DIR="$1"
 
@@ -13,18 +13,16 @@ if [[ -z "$DOTFILES_DIR" ]]; then
     exit 1
 fi
 
-# Create symlink with backup
+# シンボリックリンク作成（既存ファイルはバックアップ、既存シンボリックリンクは置換）
 create_link() {
     local src="$1"
     local dest="$2"
 
-    # Check if source exists
     if [[ ! -e "$src" ]]; then
         print_warning "Source not found: $src"
         return 0
     fi
 
-    # Create parent directory if needed
     local parent_dir
     parent_dir="$(dirname "$dest")"
     if [[ ! -d "$parent_dir" ]]; then
@@ -32,61 +30,42 @@ create_link() {
         print_info "Created directory: $parent_dir"
     fi
 
-    # If destination exists and is not a symlink, back it up
     if [[ -e "$dest" && ! -L "$dest" ]]; then
         local backup="${dest}.backup.$(date +%Y%m%d%H%M%S)"
         mv "$dest" "$backup"
         print_warning "Backed up existing file to: $backup"
     fi
 
-    # Remove existing symlink
     if [[ -L "$dest" ]]; then
         rm "$dest"
     fi
 
-    # Create symlink
     ln -s "$src" "$dest"
     print_success "Linked: $dest -> $src"
 }
 
-# Main
+# シンボリックリンク定義: "<dotfiles配下の相対パス>:<リンク先絶対パス>"
+LINKS=(
+    ".zshrc:$HOME/.zshrc"
+    ".tmux.conf:$HOME/.tmux.conf"
+    ".vimrc:$HOME/.vimrc"
+    "config/nvim:$HOME/.config/nvim"
+    "config/starship.toml:$HOME/.config/starship.toml"
+    "config/aerospace:$HOME/.config/aerospace"
+    "config/borders:$HOME/.config/borders"
+    "config/zellij:$HOME/.config/zellij"
+    "config/jj:$HOME/.config/jj"
+    "config/gh:$HOME/.config/gh"
+    "config/ghostty:$HOME/.config/ghostty"
+    "config/openspec:$HOME/.config/openspec"
+    "config/uv:$HOME/.config/uv"
+)
+
 echo "Creating symlinks..."
-
-# Shell configuration
-create_link "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
-create_link "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
-
-# Vim configuration
-create_link "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
-
-# Neovim configuration
-create_link "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
-
-# Starship prompt
-create_link "$DOTFILES_DIR/config/starship.toml" "$HOME/.config/starship.toml"
-
-# AeroSpace window manager
-create_link "$DOTFILES_DIR/config/aerospace/aerospace.toml" "$HOME/.config/aerospace/aerospace.toml"
-
-# Borders (window border styling)
-create_link "$DOTFILES_DIR/config/borders" "$HOME/.config/borders"
-
-# Zellij terminal multiplexer
-create_link "$DOTFILES_DIR/config/zellij" "$HOME/.config/zellij"
-
-# jj (Jujutsu) version control
-create_link "$DOTFILES_DIR/config/jj" "$HOME/.config/jj"
-
-create_link "$DOTFILES_DIR/config/.starship.toml" "$HOME/.config/.starship.toml"
-
-create_link "$DOTFILES_DIR/config/aerospace" "$HOME/.config/aerospace"
-
-create_link "$DOTFILES_DIR/config/gh" "$HOME/.config/gh"
-
-create_link "$DOTFILES_DIR/config/ghostty" "$HOME/.config/ghostty"
-
-create_link "$DOTFILES_DIR/config/openspec" "$HOME/.config/openspec"
-
-create_link "$DOTFILES_DIR/config/uv" "$HOME/.config/uv"
+for entry in "${LINKS[@]}"; do
+    src="${entry%%:*}"
+    dest="${entry#*:}"
+    create_link "$DOTFILES_DIR/$src" "$dest"
+done
 
 print_success "All symlinks created"

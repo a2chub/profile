@@ -2,7 +2,7 @@
 #
 # Package Installation Script
 #
-set -e
+set -euo pipefail
 
 OS="$1"
 FULL_INSTALL="${2:-false}"
@@ -11,7 +11,23 @@ FULL_INSTALL="${2:-false}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGES_DIR="$(dirname "$SCRIPT_DIR")/packages"
 
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/colors.sh"
+source "$SCRIPT_DIR/lib/colors.sh"
+
+# Install a list of packages, checking for existence first
+# Args: <check_cmd> <install_cmd> <pkg1> <pkg2> ...
+_install_packages() {
+    local check_cmd="$1"
+    local install_cmd="$2"
+    shift 2
+    for pkg in "$@"; do
+        if eval "$check_cmd \"$pkg\"" &>/dev/null; then
+            print_success "$pkg already installed"
+        else
+            echo "Installing $pkg..."
+            eval "$install_cmd \"$pkg\"" || print_warning "Failed to install $pkg"
+        fi
+    done
+}
 
 # Install Homebrew (macOS)
 install_homebrew() {
@@ -58,14 +74,7 @@ install_macos() {
         print_warning "Brewfile not found at $BREWFILE"
         local fallback_packages=(git curl wget tmux neovim ripgrep fd jq tree htop)
         echo "Installing basic packages via Homebrew..."
-        for pkg in "${fallback_packages[@]}"; do
-            if brew list "$pkg" &>/dev/null; then
-                print_success "$pkg already installed"
-            else
-                echo "Installing $pkg..."
-                brew install "$pkg" || print_warning "Failed to install $pkg"
-            fi
-        done
+        _install_packages "brew list" "brew install" "${fallback_packages[@]}"
     fi
 }
 
@@ -88,14 +97,7 @@ install_debian() {
         build-essential
     )
 
-    for pkg in "${DEBIAN_PACKAGES[@]}"; do
-        if dpkg -l "$pkg" &>/dev/null; then
-            print_success "$pkg already installed"
-        else
-            echo "Installing $pkg..."
-            sudo apt install -y "$pkg" || print_warning "Failed to install $pkg"
-        fi
-    done
+    _install_packages "dpkg -l" "sudo apt install -y" "${DEBIAN_PACKAGES[@]}"
 
     # Neovim (get latest from GitHub releases or PPA)
     if ! command -v nvim &>/dev/null; then
@@ -125,14 +127,7 @@ install_redhat() {
         htop
     )
 
-    for pkg in "${REDHAT_PACKAGES[@]}"; do
-        if rpm -q "$pkg" &>/dev/null; then
-            print_success "$pkg already installed"
-        else
-            echo "Installing $pkg..."
-            sudo dnf install -y "$pkg" || print_warning "Failed to install $pkg"
-        fi
-    done
+    _install_packages "rpm -q" "sudo dnf install -y" "${REDHAT_PACKAGES[@]}"
 }
 
 # Main
